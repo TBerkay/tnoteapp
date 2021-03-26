@@ -42,6 +42,50 @@ class NoteListState extends State<NoteListScreen> {
     );
   }
 
+  Widget _buildNoteListItem(Note note) {
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      height: 125,
+      child: Card(
+        color: Color.fromRGBO(255, 255, 128, 1),
+        elevation: 20.0,
+        child: ListTile(
+          title: Container(
+            padding: EdgeInsets.all(10.0),
+            child: Text(
+              note.title,
+              style: TextStyle(fontWeight: FontWeight.bold),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          subtitle: Container(
+            padding: EdgeInsets.only(left: 10.0, right: 10.0),
+            child: Text(
+              note.description,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          trailing: IconButton(
+            icon: Icon(
+              Icons.delete,
+              color: Color.fromRGBO(204, 41, 0, 1),
+            ),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return deleteAlert(note.id);
+                  });
+            },
+          ),
+          onTap: () {
+            updateNote(note);
+          },
+        ),
+      ),
+    );
+  }
+
   Widget _buildFloatActionButton(BuildContext context) {
     return FloatingActionButton(
       backgroundColor: Colors.green,
@@ -117,48 +161,6 @@ class NoteListState extends State<NoteListScreen> {
             },
             child: Text("Yes"))
       ],
-    );
-  }
-
-  Widget _buildNoteListItem(Note note) {
-    return Container(
-      padding: EdgeInsets.all(10.0),
-      height: 200,
-      child: Card(
-        color: Color.fromRGBO(255, 255, 128, 1),
-        elevation: 5.0,
-        child: ListTile(
-          title: Container(
-            padding: EdgeInsets.all(10.0),
-            child: Text(
-              note.title,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-          subtitle: Container(
-            padding: EdgeInsets.only(left: 10.0, right: 10.0),
-            child: Text(
-              note.description,
-            ),
-          ),
-          trailing: IconButton(
-            icon: Icon(
-              Icons.delete,
-              color: Color.fromRGBO(204, 41, 0, 1),
-            ),
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return deleteAlert(note.id);
-                  });
-            },
-          ),
-          onTap: () {
-            updateNote(note);
-          },
-        ),
-      ),
     );
   }
 }

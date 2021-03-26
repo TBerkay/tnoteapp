@@ -55,23 +55,25 @@ class NoteScreen extends StatelessWidget {
                 },
               ),
               SizedBox(
-                height: 30.0,
-              ),
-              TextFormField(
-                initialValue: note.description,
-                maxLines: 15,
-                decoration: InputDecoration(
-                    labelText: "Note",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0))),
-                onSaved: (String value) {
-                  note.description = value;
-                },
-                validator: (String value) {
-                  if (value.isEmpty) return "Note is required";
+                height: MediaQuery.of(context).size.height / 1.5,
+                child: Container(
+                  padding: EdgeInsets.all(10.0),
+                  child: TextFormField(
+                    maxLines: null,
+                    expands: true,
+                    initialValue: note.description,
+                    decoration: InputDecoration(
+                        labelText: "Note:", border: InputBorder.none),
+                    onSaved: (String value) {
+                      note.description = value;
+                    },
+                    validator: (String value) {
+                      if (value.isEmpty) return "Note is required";
 
-                  return null;
-                },
+                      return null;
+                    },
+                  ),
+                ),
               ),
             ],
           ),
@@ -89,12 +91,12 @@ class NoteScreen extends StatelessWidget {
 
         if (note.id == null) {
           _key.currentState.save();
-          note.date = DateFormat("hh:mm:ss dd-MM-yyyy").format(DateTime.now());
+          note.date = DateFormat("dd/MM/yyyy hh:mm:ss").format(DateTime.now());
           dbHelper.insert(note);
           Navigator.pop(context, true);
         } else {
           _key.currentState.save();
-          note.date = DateFormat("hh:mm:ss dd-MM-yyyy").format(DateTime.now());
+          note.date = DateFormat("dd/MM/yyyy hh:mm:ss").format(DateTime.now());
           dbHelper.update(note);
           Navigator.pop(context, true);
         }

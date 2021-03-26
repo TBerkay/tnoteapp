@@ -31,7 +31,7 @@ class DbHelper {
   }
 
   Future<Database> initializeDb() async{
-    String path = join(await getDatabasesPath(), "note2.db");
+    String path = join(await getDatabasesPath(), "tnote2.db");
     var dbNotes = openDatabase(path, version: 1, onCreate: _onCreate);
     return dbNotes;
   }
